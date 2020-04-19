@@ -278,10 +278,14 @@
                 <div class="col-md-12">
                     <div class="newsletter">
                         <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                        <form>
-                            <input class="input" type="email" placeholder="Enter Your Email">
-                            <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-                        </form>
+                            <input class="input" type="email" id="newsletter_email" name="newsletter_email" placeholder="Enter Your Email" required>
+                            <button type="submit" id="newsletter_btn" class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+                            <div id="newsletterError" class="alert alert-danger hide">
+                                <span class="closeNewsletter">&#10006;</span> Something wrong.<span class="newsItalic"> Please, try again later.</span>
+                            </div>
+                            <div id="newsletterSuccess" class="alert alert-success hide">
+                                <span class="closeNewsletter">&#10006;</span><span class="newsItalic"> You've successfully registered newsletters.</span>
+                            </div>
                         <ul class="newsletter-follow">
                             <li>
                                 <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>

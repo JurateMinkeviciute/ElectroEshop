@@ -42,6 +42,9 @@
             <!-- product -->
             @foreach (var pro in Model.products)
             {@*as IPagedList<Product>)*@
+            int stars = 0;
+            var avgRating = (pro.product.avg_rating != null ? pro.product.avg_rating : 1);
+            int number = (int)(avgRating * 10 % 10);
             <div class="col-md-3 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -66,13 +69,32 @@
                         {
                             <h4 class="product-price">@pro.product.product_price</h4>
                         }
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
+                            <div class="product-rating">
+                                @for (int i = 0; i < pro.product.avg_rating - 1; i++)
+                                {
+                                    <i class="fa fa-star"></i>
+                                    stars++;
+                                }
+                                @if (number == 0)
+                                {
+                                    <i class="fa fa-star"></i>
+                                    stars++;
+                                }
+                                else if (number < 5)
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                    stars++;
+                                }
+                                else if (number >= 5)
+                                {
+                                    <i class="fa fa-star-half-o"></i>
+                                    stars++;
+                                }
+                                @for (int i = stars; i < 5; i++)
+                                {
+                                    <i class="fa fa-star-o empty"></i>
+                                }
+                            </div>
                         <div class="product-btns">
                             <button style="color:red" onclick="location.href='@Url.Action("RemoveFromWishList", "Home", new { pro_id = pro.product.product_id })'" class="add-to-wishlist"><i class="fa fa-heart"></i><span class="tooltipp">remove from wishlist</span></button>
                             <i class="fa fa-ge"></i>
@@ -96,7 +118,7 @@
             <span class="store-qty">
                 Page @(Model.products.PageCount < Model.products.PageNumber ? 0 : Model.products.PageNumber) of @Model.products.PageCount
             </span>
-            @Html.PagedListPager(Model.products, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions {
+            @Html.PagedListPager(Model.products, page => Url.Action("WishList", new { page }), new PagedListRenderOptions {
                     LiElementClasses = new string[] { "" },
                     UlElementClasses = new string[] { "store-pagination" },
                     LinkToLastPageFormat = "&Uacute;ltima >>"

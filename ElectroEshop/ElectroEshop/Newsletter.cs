@@ -11,10 +11,12 @@ namespace ElectroEshop
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Newsletter
     {
         public int newsletter_id { get; set; }
+        [Required]
         public string newsletter_email { get; set; }
         public Nullable<byte> newsletter_order { get; set; }
     }

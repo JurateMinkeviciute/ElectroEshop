@@ -50,7 +50,7 @@ namespace ElectroEshop.Controllers
         }
         public ActionResult Categories(int? page)
         {
-            throw new InvalidOperationException("Logfile cannot be read-only");
+            //throw new InvalidOperationException("Logfile cannot be read-only");
             var productList = getProducts(true, page);
 
             return View(productList);
@@ -335,6 +335,7 @@ namespace ElectroEshop.Controllers
         [Authorize]
         public ActionResult WishList(int? page)
         {
+            pagesize = 8;
             pageindex = page.HasValue ? Convert.ToInt32(page) : 1;
 
             var userId = User.Identity.GetUserId();
@@ -364,6 +365,10 @@ namespace ElectroEshop.Controllers
         }
         public JsonResult rating(string clientName, string clientEmail, string clientText, int Rating, int productId)
         {
+            if(clientName == "" || clientEmail == "" || clientText == "" || Rating < 1)
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
             Reviewer reviewer = new Reviewer()
             {
                 reviewer_name = clientName,
@@ -389,6 +394,21 @@ namespace ElectroEshop.Controllers
             }
             db.SaveChanges();
 
+            return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult RegisterNewsletter(string newsletterEmail)
+        {
+            if(newsletterEmail == null || newsletterEmail == "")
+            {
+                return Json(JsonRequestBehavior.DenyGet);
+            }
+            var newsletter = new Newsletter()
+            {
+                newsletter_email = newsletterEmail,
+                newsletter_order = 1
+            };
+            db.Newsletters.Add(newsletter);
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult AddToCart(int pro_id, string category = null)

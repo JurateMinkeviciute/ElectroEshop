@@ -1,6 +1,51 @@
 (function($) {
     "use strict"
 
+    /////////////////////////////////////////
+
+	// subscribe newsletter
+
+    $('.closeNewsletter').click(function () {
+        $('#newsletterError').removeClass('show');
+        $('#newsletterError').addClass('hide');
+        $('#newsletterSuccess').removeClass('show');
+        $('#newsletterSuccess').addClass('hide');
+    });
+
+    var newsletterEmail;
+
+    $('#newsletter_btn').click(function () {
+        newsletterEmail = $('#newsletter_email').val();
+        registerNewsletter();
+    });
+
+    function registerNewsletter() {
+        $.ajax({
+            type: "GET",
+            url: '/Home/RegisterNewsletter/)',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: {
+                newsletterEmail: newsletterEmail
+            },
+            success: function (data) {
+                $('#newsletterSuccess').addClass('show');
+                //console.log(data.responseText);
+            },
+            failure: function (response) {
+                $('#newsletterError').addClass('show');
+                //console.log(response.responseText);
+            },
+            error: function (response) {
+                $('#newsletterError').addClass('show');
+                //console.log(response.responseText);
+            }
+        });
+    }
+
+    /////////////////////////////////////////
+
+	// filter products
 
     var changedPage = 6;
     var changedSorting = 6;
@@ -85,7 +130,6 @@
             },
             failure: function (response) {
                 console.log(response.responseText);
-                alert(response.responseText);
             },
             error: function (response) {
                 console.log(response.responseText);
@@ -93,95 +137,7 @@
         });
     }
 
-
-    //var changedSorting = 6;
-    //var changedMinPrice = 1;
-    //var changedMaxPrice = 9999;
-    //var checkedCategories = "";
-    //var checkedBrands = "";
-
-    //$('#sortSelectList').change(function () {
-    //    changedSorting = $(this).val();
-    //    console.log($(this).val());
-    //    callAjaxFunction();
-    //});
-    //$('#pageSelectList').change(function () {
-    //    var value = $(this).val();
-    //    console.log(value);
-    //});
-    //$(".price-min").change(function () {
-    //    changedMinPrice = parseInt($('#price-min').val());
-    //    console.log("I am id " + $('#price-min').val());
-    //    callAjaxFunction();
-    //});
-    //$(".price-max").change(function () {
-    //    changedMaxPrice = parseInt($('#price-max').val());
-    //    console.log(changedMaxPrice);
-    //    callAjaxFunction();
-    //});
-    //$("#input-category").change(function () {
-    //    callAjaxFunction();
-    //});
-    //$("#input-brand").change(function () {
-    //    $("#input-brand input[type = 'checkbox']").each(function () {
-    //        var c = $(this).is(":checked");
-    //        //console.log("** ** ** **");
-    //        //console.log($(this));
-    //        if (c) {
-    //            var checkedId = $(this).attr("id");
-    //            if (!(checkedBrands.includes(checkedId))) {
-    //                (checkedBrands == "" ? checkedBrands += checkedId : checkedBrands += "+" + checkedId);              //console.log(checkedBrands);
-    //            }
-    //        }
-    //    });
-    //    callAjaxFunction();
-    //});
-    //function checkedCategoriesFunction() {
-    //    $("#input-category input[type = 'checkbox']").each(function () {
-    //        var c = $(this).is(":checked");
-    //        console.log("I am HERE");
-    //        console.log($(this));
-    //        if (c) {
-    //            var checkedId = $(this).attr("id");
-    //            if (!checkedCategories.includes(checkedId)) {
-    //                (checkedCategories == "" ? checkedCategories += checkedId : checkedCategories += "+" + checkedId);  //console.log(checkedCategories);
-    //            }
-    //        }
-    //    });
-    //}
-
-    //function callAjaxFunction() {
-    //    checkedCategoriesFunction();
-    //    $.ajax({
-    //        type: "Get",
-    //        url: '/Home/filterAjax/)',
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: 'html',
-    //        data: {
-    //            categoriesString: checkedCategories,
-    //            brandsString: checkedBrands,
-    //            changedMinPrice: changedMinPrice,
-    //            changedMaxPrice: changedMaxPrice,
-    //            changedSorting: changedSorting
-    //        },
-    //        success: function (data) {
-    //            //console.log(data);
-
-    //            $('#changeWithAjax').empty();
-    //            $('#changeWithAjax').html(data);
-    //            checkedCategories = "";
-    //            checkedBrands = "";
-    //        },
-    //        failure: function (response) {
-    //            console.log(response.responseText);
-    //            alert(response.responseText);
-    //        },
-    //        error: function (response) {
-    //            console.log(response.responseText);
-    //        }
-    //    });
-    //}
-        
+    /////////////////////////////////////////
 
 	// Mobile Nav toggle
 	$('.menu-toggle > a').on('click', function (e) {
