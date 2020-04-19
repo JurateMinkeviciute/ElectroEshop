@@ -1,0 +1,184 @@
+﻿@model ElectroEshop.Models.ProductListViewModel
+<!-- ASIDE -->
+<div id="aside" class="col-md-3">
+    <!-- aside Widget -->
+    <div class="aside" id="input-category">
+        @if (Model.categoriesWithCount.Any())
+        {
+            <h3 class="aside-title">Categories</h3>
+            <div class="checkbox-filter">
+                @*<div class="input-checkbox">
+                        <input type="checkbox" id="category-1">
+                        <label for="category-1">
+                            <span></span>
+                            @Ajax.ActionLink("Laptops", "Laptops", new { filters = "category-2" }, new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    UpdateTargetId = "changeWithAjax",
+                                    InsertionMode = InsertionMode.Replace
+                                })
+                            Laptops
+                            <small>(10020)</small>
+                        </label>
+                    </div>*@
+
+                @*<div class="input-checkbox">
+                        <input type="checkbox" id="category-2">
+                        <label for="category-2">
+                            <span></span>
+                            @Ajax.ActionLink("Smartphones", "Smartphones", new { filters = "category-2" }, new AjaxOptions() {
+                                    HttpMethod = "GET",
+                                    UpdateTargetId = "changeWithAjax",
+                                    InsertionMode = InsertionMode.Replace
+                                })
+                            Smartphones
+                            <small>(740)</small>
+                        </label>
+                    </div>*@
+
+                @foreach (var category in Model.categoriesWithCount)
+                {
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="@category.category.category_name">
+                        <label for="@category.category.category_name">
+                            <span></span>
+                            @category.category.category_name
+                            <small>(@category.countCategories)</small>
+                        </label>
+                    </div>
+                }
+            </div>
+        }
+        else {
+        <div style="display:none" class="input-checkbox">
+            <input type="checkbox" id="@Model.Category" checked>
+        </div>
+        }
+    </div>
+    <!-- /aside Widget -->
+    <!-- aside Widget -->
+    <div class="aside">
+        <h3 class="aside-title">Price</h3>
+        <div class="price-filter">
+            <div id="price-slider"></div>
+            <div class="input-number price-min">
+                <input id="price-min" type="number">
+                <span class="qty-up">+</span>
+                <span class="qty-down">-</span>
+            </div>
+            <span>-</span>
+            <div class="input-number price-max">
+                <input id="price-max" type="number">
+                <span class="qty-up">+</span>
+                <span class="qty-down">-</span>
+            </div>
+        </div>
+    </div>
+    <!-- /aside Widget -->
+    <!-- aside Widget -->
+    <div class="aside" id="input-brand">
+        @if (Model.brandsWithCount.Any())
+            {
+            <h3 class="aside-title">Brands</h3>
+            <div class="checkbox-filter">
+
+                @foreach (var brand in Model.brandsWithCount)
+                {
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="@brand.brand.brand_name">
+                        <label for="@brand.brand.brand_name">
+                            <span></span>
+                            @brand.brand.brand_name
+                            <small>(@brand.countBrands)</small>
+                        </label>
+                    </div>
+                }
+
+                @*<div class="input-checkbox">
+                        <input type="checkbox" id="brand-2">
+                        <label for="brand-2">
+                            <span></span>
+                            LG
+                            <small>(125)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-3">
+                        <label for="brand-3">
+                            <span></span>
+                            SONY
+                            <small>(755)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-4">
+                        <label for="brand-4">
+                            <span></span>
+                            SAMSUNG
+                            <small>(578)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-5">
+                        <label for="brand-5">
+                            <span></span>
+                            LG
+                            <small>(125)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-6">
+                        <label for="brand-6">
+                            <span></span>
+                            SONY
+                            <small>(755)</small>
+                        </label>
+                    </div>*@
+            </div>
+        }
+    </div>
+    <!-- /aside Widget -->
+    <!-- aside Widget -->
+    <div class="aside">
+        @if (Model.topProducts.Any())
+        {
+            <h3 class="aside-title">Top selling</h3>
+            foreach (var topPro in Model.topProducts)
+            {
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="~/Content/img/@topPro.product.product_mainPhoto" alt="">
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">@topPro.category_name.TrimEnd('s')</p>
+                        <h3 class="product-name"><a href="#">@topPro.product.product_name</a></h3>
+                        <h4 class="product-price">@topPro.product.product_price <del class="product-old-price">$990.00</del></h4>
+                    </div>
+                </div>
+            }
+        }
+        @*<div class="product-widget">
+                <div class="product-img">
+                    <img src="~/Content/img/product02.png" alt="">
+                </div>
+                <div class="product-body">
+                    <p class="product-category">Category</p>
+                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                </div>
+            </div>
+
+            <div class="product-widget">
+                <div class="product-img">
+                    <img src="~/Content/img/product03.png" alt="">
+                </div>
+                <div class="product-body">
+                    <p class="product-category">Category</p>
+                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                </div>
+            </div>*@
+    </div>
+    <!-- /aside Widget -->
+</div>
+<!-- /ASIDE -->

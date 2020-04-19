@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ElectroEshopModelStoreContainer" CdmEntityContainer="ElectroEshopEntities1">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="ElectroEshopModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdditionalShippingAddresses">
+      <EntityTypeMapping TypeName="ElectroEshopModel.AdditionalShippingAddress">
+        <MappingFragment StoreEntitySet="AdditionalShippingAddress">
+          <ScalarProperty Name="shipping_id" ColumnName="shipping_id" />
+          <ScalarProperty Name="shipping_firstName" ColumnName="shipping_firstName" />
+          <ScalarProperty Name="shipping_lastName" ColumnName="shipping_lastName" />
+          <ScalarProperty Name="shipping_email" ColumnName="shipping_email" />
+          <ScalarProperty Name="shipping_address" ColumnName="shipping_address" />
+          <ScalarProperty Name="shipping_city" ColumnName="shipping_city" />
+          <ScalarProperty Name="shipping_country" ColumnName="shipping_country" />
+          <ScalarProperty Name="shipping_zipCode" ColumnName="shipping_zipCode" />
+          <ScalarProperty Name="shipping_telephone" ColumnName="shipping_telephone" />
+          <ScalarProperty Name="shipping_createDate" ColumnName="shipping_createDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="ElectroEshopModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="ElectroEshopModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="ElectroEshopModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="ElectroEshopModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="fk_shipping_id" ColumnName="fk_shipping_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillingAddresses">
+      <EntityTypeMapping TypeName="ElectroEshopModel.BillingAddress">
+        <MappingFragment StoreEntitySet="BillingAddress">
+          <ScalarProperty Name="billing_id" ColumnName="billing_id" />
+          <ScalarProperty Name="billing_firstName" ColumnName="billing_firstName" />
+          <ScalarProperty Name="billing_lastName" ColumnName="billing_lastName" />
+          <ScalarProperty Name="billing_email" ColumnName="billing_email" />
+          <ScalarProperty Name="billing_address" ColumnName="billing_address" />
+          <ScalarProperty Name="billing_city" ColumnName="billing_city" />
+          <ScalarProperty Name="billing_country" ColumnName="billing_country" />
+          <ScalarProperty Name="billing_createDate" ColumnName="billing_createDate" />
+          <ScalarProperty Name="billing_zipCode" ColumnName="billing_zipCode" />
+          <ScalarProperty Name="billing_telephone" ColumnName="billing_telephone" />
+          <ScalarProperty Name="billing_note" ColumnName="billing_note" />
+          <ScalarProperty Name="fk_user_id" ColumnName="fk_user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Brands">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Brand">
+        <MappingFragment StoreEntitySet="Brands">
+          <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+          <ScalarProperty Name="brand_name" ColumnName="brand_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Category">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemOrders">
+      <EntityTypeMapping TypeName="ElectroEshopModel.ItemOrder">
+        <MappingFragment StoreEntitySet="ItemsOrder">
+          <ScalarProperty Name="item_id" ColumnName="item_id" />
+          <ScalarProperty Name="item_quantity" ColumnName="item_quantity" />
+          <ScalarProperty Name="item_discount" ColumnName="item_discount" />
+          <ScalarProperty Name="item_quantityPrice" ColumnName="item_quantityPrice" />
+          <ScalarProperty Name="fk_product_id" ColumnName="fk_product_id" />
+          <ScalarProperty Name="fk_order_id" ColumnName="fk_order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Newsletters">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Newsletter">
+        <MappingFragment StoreEntitySet="Newsletters">
+          <ScalarProperty Name="newsletter_id" ColumnName="newsletter_id" />
+          <ScalarProperty Name="newsletter_email" ColumnName="newsletter_email" />
+          <ScalarProperty Name="newsletter_order" ColumnName="newsletter_order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="order_createDate" ColumnName="order_createDate" />
+          <ScalarProperty Name="order_totalPrice" ColumnName="order_totalPrice" />
+          <ScalarProperty Name="order_shippingPrice" ColumnName="order_shippingPrice" />
+          <ScalarProperty Name="order_status" ColumnName="order_status" />
+          <ScalarProperty Name="fk_billing_id" ColumnName="fk_billing_id" />
+          <ScalarProperty Name="fk_user_id" ColumnName="fk_user_id" />
+          <ScalarProperty Name="fk_shipping_id" ColumnName="fk_shipping_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Photos">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Photo">
+        <MappingFragment StoreEntitySet="Photos">
+          <ScalarProperty Name="photo_id" ColumnName="photo_id" />
+          <ScalarProperty Name="photo_name" ColumnName="photo_name" />
+          <ScalarProperty Name="photo_alter" ColumnName="photo_alter" />
+          <ScalarProperty Name="fk_product_id" ColumnName="fk_product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_model" ColumnName="product_model" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_quantity" ColumnName="product_quantity" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_mainPhoto" ColumnName="product_mainPhoto" />
+          <ScalarProperty Name="product_createDate" ColumnName="product_createDate" />
+          <ScalarProperty Name="product_expiredDate" ColumnName="product_expiredDate" />
+          <ScalarProperty Name="product_size" ColumnName="product_size" />
+          <ScalarProperty Name="product_color" ColumnName="product_color" />
+          <ScalarProperty Name="product_soldQuantity" ColumnName="product_soldQuantity" />
+          <ScalarProperty Name="fk_brand_id" ColumnName="fk_brand_id" />
+          <ScalarProperty Name="fk_category_id" ColumnName="fk_category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reviewers">
+      <EntityTypeMapping TypeName="ElectroEshopModel.Reviewer">
+        <MappingFragment StoreEntitySet="Reviewers">
+          <ScalarProperty Name="reviewer_id" ColumnName="reviewer_id" />
+          <ScalarProperty Name="reviewer_name" ColumnName="reviewer_name" />
+          <ScalarProperty Name="reviewer_email" ColumnName="reviewer_email" />
+          <ScalarProperty Name="reviewer_comment" ColumnName="reviewer_comment" />
+          <ScalarProperty Name="reviewer_date" ColumnName="reviewer_date" />
+          <ScalarProperty Name="reviewer_rating" ColumnName="reviewer_rating" />
+          <ScalarProperty Name="fk_product_id" ColumnName="fk_product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="ElectroEshopModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="WishListItems">
+      <EntityTypeMapping TypeName="ElectroEshopModel.WishListItem">
+        <MappingFragment StoreEntitySet="WishListItems">
+          <ScalarProperty Name="fk_user_id" ColumnName="fk_user_id" />
+          <ScalarProperty Name="fk_product_id" ColumnName="fk_product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="WishListItems1" TypeName="ElectroEshopModel.WishListItems" StoreEntitySet="WishListItems">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="fk_user_id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="product_id" ColumnName="fk_product_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

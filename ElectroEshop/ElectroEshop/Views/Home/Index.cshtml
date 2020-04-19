@@ -1,0 +1,1011 @@
+﻿@using Microsoft.AspNet.Identity;
+@{
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+@model ElectroEshop.Models.HomeListsViewModel
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- shop -->
+            <div class="col-md-4 col-xs-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="~/Content/img/shop01.png" alt="">
+                    </div>
+                    <div class="shop-body">
+                        <h3>Laptop<br>Collection</h3>
+                        <a href="@Url.Action("Categories")" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /shop -->
+            <!-- shop -->
+            <div class="col-md-4 col-xs-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="~/Content/img/shop03.png" alt="">
+                    </div>
+                    <div class="shop-body">
+                        <h3>Accessories<br>Collection</h3>
+                        <a href="@Url.Action("Accessories")" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /shop -->
+            <!-- shop -->
+            <div class="col-md-4 col-xs-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="~/Content/img/shop02.png" alt="">
+                    </div>
+                    <div class="shop-body">
+                        <h3>Cameras<br>Collection</h3>
+                        <a href="@Url.Action("Cameras")" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /shop -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">New Products</h3>
+                    <div class="section-nav">
+                        <ul class="section-tab-nav tab-nav">
+                            <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
+                            <li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
+                            <li><a data-toggle="tab" href="#tab3">Cameras</a></li>
+                            <li><a data-toggle="tab" href="#tab4">Accessories</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /section title -->
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        @if (Model.newLaptopsList.Any())
+                        {
+                            <!-- tab -->
+                            <div id="tab1" class="tab-pane active">
+                                <div class="products-slick" data-nav="#slick-tab1">
+                                    @foreach (var pro in Model.newLaptopsList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id =pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                @using (Html.BeginForm("AddToCart", "Home", new { pro_id = pro.product_id }, FormMethod.Post))
+                                                {
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-tab1" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab -->
+                        }
+                        @if (Model.newSmartphonesList.Any())
+                        {
+                            <!-- tab -->
+                            <div id="tab2" class="tab-pane">
+                                <div class="products-slick" data-nav="#slick-tab2">
+                                    @foreach (var pro in Model.newSmartphonesList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                @using (Html.BeginForm("AddToCart", "Home", new { pro_id = 1 }, FormMethod.Post))
+                                                {
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-tab2" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab -->
+                        }
+                        @if (Model.tendCamerasList.Any())
+                        {
+                            <!-- tab3 -->
+                            <div id="tab3" class="tab-pane fade">
+                                <div class="products-slick" data-nav="#slick-tab3">
+                                    @foreach (var pro in Model.tendCamerasList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                @using (Html.BeginForm("AddToCart", "Home", new { pro_id = 1 }, FormMethod.Post))
+                                                {
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-tab3" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab3 -->
+                        }
+                        @if (Model.tendAccessoriesList.Any())
+                        {
+                            <!-- tab4 -->
+                            <div id="tab4" class="tab-pane fade">
+                                <div class="products-slick" data-nav="#slick-tab4">
+                                    @foreach (var pro in Model.tendAccessoriesList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                @using (Html.BeginForm("AddToCart", "Home", new { pro_id = 1 }, FormMethod.Post))
+                                                {
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-tab4" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab4 -->
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- HOT DEAL SECTION -->
+<div id="hot-deal" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hot-deal">
+                    <ul class="hot-deal-countdown">
+                    </ul>
+                    <h2 class="text-uppercase">hot deal this week</h2>
+                    <p>New Collection Up to 50% OFF</p>
+                    <a class="primary-btn cta-btn" href="@Url.Action("Categories")">Shop now</a>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /HOT DEAL SECTION -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Top selling</h3>
+                    <div class="section-nav">
+                        <ul class="section-tab-nav tab-nav">
+                            <li class="active"><a data-toggle="tab" href="#menu1">Laptops</a></li>
+                            <li><a data-toggle="tab" href="#menu2">Smartphones</a></li>
+                            <li><a data-toggle="tab" href="#menu3">Cameras</a></li>
+                            <li><a data-toggle="tab" href="#menu4">Accessories</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /section title -->
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        @if (Model.tendLaptopsList.Any())
+                        {
+                            <!-- tab -->
+                            <div id="menu1" class="tab-pane fade in active">
+                                <div class="products-slick" data-nav="#slick-menu1">
+                                    @foreach (var pro in Model.tendLaptopsList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (@pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-menu1" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab -->
+                        }
+                        @if (Model.tendSmartphonesList.Any())
+                        {
+                            <!-- tab -->
+                            <div id="menu2" class="tab-pane fade">
+                                <div class="products-slick" data-nav="#slick-menu2">
+                                    @foreach (var pro in Model.tendSmartphonesList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-menu2" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab -->
+                        }
+                        @if (Model.tendCamerasList.Any())
+                        {
+                            <!-- tab -->
+                            <div id="menu3" class="tab-pane fade">
+                                <div class="products-slick" data-nav="#slick-menu3">
+                                    @foreach (var pro in Model.tendCamerasList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-menu3" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab -->
+                        }
+                        @if (Model.tendAccessoriesList.Any())
+                        {
+                            <!-- tab -->
+                            <div id="menu4" class="tab-pane fade">
+                                <div class="products-slick" data-nav="#slick-menu4">
+                                    @foreach (var pro in Model.tendAccessoriesList)
+                                    {
+                                        int stars = 0;
+                                        var avgRating = (pro.avg_rating != null ? pro.avg_rating : 1);
+                                        int number = (int)(avgRating * 10 % 10);
+                                        <!-- product -->
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                                <div class="product-label">
+                                                    @if (@pro.product_discount != null)
+                                                    {
+                                                        <span class="sale">-@pro.product_discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <p class="product-category">Laptop</p>
+                                                <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id=pro.product_id })">@pro.product_name</a></h3>
+                                                @if (pro.product_discount != null)
+                                                {
+                                                    <h4 class="product-price"> @pro.product_discountprice <del class="product-old-price">@pro.product_price</del></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="product-price">@pro.product_price</h4>
+                                                }
+                                                <div class="product-rating">
+                                                    @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    @if (number == 0)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number < 5)
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                        stars++;
+                                                    }
+                                                    else if (number >= 5)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        stars++;
+                                                    }
+                                                    @for (int i = stars; i < 5; i++)
+                                                    {
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    }
+                                                </div>
+                                                <div class="product-btns">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                                    }
+                                                    <i class="fa fa-ge"></i>
+                                                    <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            </div>
+                                        </div>
+                                        <!-- /product -->
+                                    }
+                                </div>
+                                <div id="slick-menu4" class="products-slick-nav"></div>
+                            </div>
+                            <!-- /tab -->
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-4 col-xs-6">
+                <div class="section-title">
+                    <h4 class="title">Top selling</h4>
+                    <div class="section-nav">
+                        <div id="slick-nav-3" class="products-slick-nav"></div>
+                    </div>
+                </div>
+
+                <div class="products-widget-slick" data-nav="#slick-nav-3">
+                    <div>
+                        @foreach (var pro in Model.topSellingList.Take(3))
+                        {
+                            <!-- product widget -->
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                </div>
+                            </div>
+                            <!-- /product widget -->
+                        }
+                    </div>
+
+                    <div>
+                        @foreach (var pro in Model.topSellingList.Take(3))
+                        {
+                            <!-- product widget -->
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                </div>
+                            </div>
+                            <!-- /product widget -->
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-6">
+                <div class="section-title">
+                    <h4 class="title">Top selling</h4>
+                    <div class="section-nav">
+                        <div id="slick-nav-4" class="products-slick-nav"></div>
+                    </div>
+                </div>
+
+                <div class="products-widget-slick" data-nav="#slick-nav-4">
+                    <div>
+                        @foreach (var pro in Model.topSellingList.Take(3))
+                        {
+                            <!-- product widget -->
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                </div>
+                            </div>
+                            <!-- /product widget -->
+                        }
+                    </div>
+
+                    <div>
+                        @foreach (var pro in Model.topSellingList.Take(3))
+                        {
+                            <!-- product widget -->
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                </div>
+                            </div>
+                            <!-- /product widget -->
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix visible-sm visible-xs"></div>
+
+            <div class="col-md-4 col-xs-6">
+                <div class="section-title">
+                    <h4 class="title">Top selling</h4>
+                    <div class="section-nav">
+                        <div id="slick-nav-5" class="products-slick-nav"></div>
+                    </div>
+                </div>
+
+                <div class="products-widget-slick" data-nav="#slick-nav-5">
+                    <div>
+                        @foreach (var pro in Model.topSellingList.Take(3))
+                        {
+                            <!-- product widget -->
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                </div>
+                            </div>
+                            <!-- /product widget -->
+                        }
+                    </div>
+
+                    <div>
+                        @foreach (var pro in Model.topSellingList.Take(3))
+                        {
+                            <!-- product widget -->
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">Category</p>
+                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                </div>
+                            </div>
+                            <!-- /product widget -->
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+@section Scripts{
+    <script>
+        $('.navbar-nav li').removeClass("active");
+        $('#liHome').addClass('active');
+
+        var countDownDate = new Date("May 30, 2020 22:39:25").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Output the result in an element 
+            $('.hot-deal-countdown').html("<li><div><h3>" + days + "</h3><span>Days</span></div></li>" +
+                "<li><div><h3>" + hours + "</h3><span>Hours</span></div></li>" +
+                "<li><div><h3>" + minutes + "</h3><span>Mins</span></div></li>" +
+                "<li><div><h3>" + seconds + "</h3><span>Secs</span></div></li>")
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("hot-deal").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+}

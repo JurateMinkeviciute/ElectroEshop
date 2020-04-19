@@ -1,0 +1,114 @@
+﻿@using ElectroEshop.Models
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+@{
+    List<CartItem> sessionHolder = (List<CartItem>)Session["cart"];
+    decimal Total = 0;
+    int CountItems = 0;
+    if (sessionHolder != null)
+    {
+        foreach (var item in sessionHolder)
+        {
+            Total += item.Price * item.Quantity;
+            CountItems++;
+        }
+    }
+}
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="#">Home</a></li>
+                    <li class="active">View Cart</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Order Details -->
+            <div style="font-size: 15px" class="col-md-12 order-details">
+                <div class="section-title text-center">
+                    <h3 class="title">Your Order</h3>
+                </div>
+                <div class="order-summary">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr @*align="right"*@>
+                                <th align="right">Image</th>
+                                <th align="right">Product</th>
+                                <th>Price &euro;</th>
+                                <th>Color</th>
+                                <th>Quantity</th>
+                                @*<th>Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (sessionHolder != null)
+                            {
+                                foreach (var pro in sessionHolder)
+                                {
+                                    <tr style="text-align:center">
+                                        <td><img style="height:50px" src="~/Content/img/@pro.Photo" /></td>
+                                        <td>@pro.ProductName</td>
+                                        <td>@pro.Price &euro;</td>
+                                        <td>@pro.Color</td>
+                                        <td>
+                                            @pro.Quantity &nbsp;@*</td>*@
+                                            @*<td>*@
+
+                                            <a href="@Url.Action("IncreaseQty", "Home", new { id = @pro.Id } )">
+                                                <i id="plusItem" style="font-size:20px" class="fa fa-plus-square"></i>
+                                            </a>
+                                            <a href="@Url.Action("DecreaseQty", "Home", new { id = @pro.Id })">
+                                                <i id="minusItem" style="font-size:20px" class="fa fa-minus-square"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="order-col">
+                        <div>Shiping</div>
+                        <div><strong>FREE</strong></div>
+                    </div>
+                    <div class="order-col">
+                        <div><strong>TOTAL</strong></div>
+                        <div><strong class="order-total">@Total &euro;</strong></div>
+                    </div>
+                </div>
+                @if (sessionHolder != null && sessionHolder.Any())
+                {
+                    <a href="@Url.Action("Checkout")" style="display:unset; float: right;" class="primary-btn order-submit">Checkout</a>
+                }
+                    <a href="@Url.Action("Categories")" style="display:unset; float: right; margin-right:20px; background:black" class="primary-btn order-submit">Continue Shoping</a>
+                </div>
+            <!-- /Order Details -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

@@ -1,0 +1,53 @@
+﻿@model ElectroEshop.Models.ProductListViewModel
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            @Html.Partial("_Aside")
+            <!-- STORE -->
+            <div id="store" class="col-md-9">
+                <!-- store top filter -->
+                <div class="store-filter clearfix">
+                    <div class="store-sort">
+                        <label>
+                            Sort By:
+                            <select class="input-select" id="sortSelectList">
+                                @*<option selected value=""> </option>*@
+                                <option value="1">Popular</option>
+                                <option value="2">Price(Low To High)</option>
+                                <option value="3">Price(High To Low)</option>
+                                <option value="4">Discount(High To Low)</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Show:
+                            <select class="input-select" id="pageSelectList">
+                                <option value="6">6</option>
+                                <option value="9">9</option>
+                                <option value="12">12</option>
+                            </select>
+                        </label>
+                    </div>
+                    <ul class="store-grid">
+                        <li class="active"><i class="fa fa-th"></i></li>
+                        @*<li><a href="#"><i class="fa fa-th-list"></i></a></li>*@
+                    </ul>
+                </div>
+                <!-- /store top filter -->
+                <!-- store products -->
+                <div id="changeWithAjax">
+                    @Html.Partial("_Store")
+                </div>                @* Html.Partial("_Store") *@
+                <!-- /store products -->
+                <!-- store bottom filter -->  <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

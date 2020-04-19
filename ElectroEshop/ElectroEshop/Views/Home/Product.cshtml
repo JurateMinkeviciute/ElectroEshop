@@ -1,0 +1,372 @@
+﻿@using ElectroEshop.Models;
+@using System.Collections.Generic;
+@model ElectroEshop.Models.ProductViewModel
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+    string Path = "~/Content/img/";
+    int stars = 0;
+    var avgRating = (Model.product.avg_rating != null ? Model.product.avg_rating : 1);
+    int number = (int)(avgRating * 10 % 10);
+}
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="@Url.Action("Index")">Home</a></li>
+                    <li><a href="@Url.Action("Laptops")">Laptops</a></li>
+                    <li class="active">@Model.product.product_name</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    @foreach (var photo in Model.photos)
+                    {
+                        <div class="product-preview">
+                            <img src="~/Content/img/@photo.photo_name" alt="@photo.photo_alter">
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /Product main img -->
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    @foreach (var photo in Model.photos)
+                    {
+                        <div class="product-preview">
+                            <img src="~/Content/img/@photo.photo_name" alt="@photo.photo_alter">
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /Product thumb imgs -->
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">@Model.product.product_name</h2>
+                    <div>
+                        <div class="product-rating">
+                            @for (int i = 0; i < Model.product.avg_rating - 1; i++)
+                            {
+                                <i class="fa fa-star"></i>
+                                stars++;
+                            }
+                            @if (number == 0)
+                            {
+                                <i class="fa fa-star"></i>
+                                stars++;
+                            }
+                            else if (number < 5)
+                            {
+                                <i class="fa fa-star-o"></i>
+                                stars++;
+                            }
+                            else if (number >= 5)
+                            {
+                                <i class="fa fa-star-half-o"></i>
+                                stars++;
+                            }
+                            @for (int i = stars; i < 5; i++)
+                            {
+                                <i class="fa fa-star-o empty"></i>
+                            }
+                        </div>
+                        <a class="review-link" href="#tab3">@Model.reviewsCount @(Model.reviewsCount == 1 ? "Review" : "Reviews") | Add your review</a>
+                    </div>
+                    <div>
+                        @if (Model.product.product_discount != null)
+                        {
+                            <h3 class="product-price">@Model.product.product_discountprice&euro; <del class="product-old-price">@Model.product.product_price</del></h3>
+                        }
+                        else
+                        {
+                            <h3 class="product-price">@Model.product.product_price &euro;</h3>
+                        }
+                        <span class="product-available">@(Model.product.product_quantity > 0 ? "In Stock" : "Out Of Stock")</span>
+                    </div>
+                    <p>@Model.product.product_description</p>
+
+                    <div class="product-options">
+                        @if (Model.product.product_size != null)
+                        {
+                        <label>
+                            Size
+                            <select class="input-select">
+                                <option value="0">@Model.product.product_size</option>
+                            </select>
+                        </label>
+                        }
+                        @if (ViewBag.selectColor != null)
+                        {
+                        <label>
+                            Color
+                            @Html.DropDownList("ColorSelect", ViewBag.selectColor as SelectList, new { @class = "input-select" })
+                        </label>
+                        }
+                    </div>
+
+                    <div class="add-to-cart">
+                        <div class="qty-label">
+                            Qty
+                            <div class="input-number">
+                                <input type="number" value="1" min="1" max="20">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                    </div>
+
+                    <ul class="product-btns">
+                        <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+                    </ul>
+
+                    <ul class="product-links">
+                        <li>Category:</li>
+                        <li><a href="@Url.Action(@Model.category_name)">@Model.category_name</a></li>
+                    </ul>
+
+                    <ul class="product-links">
+                        <li>Share:</li>
+                        <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://myaccount.google.com/"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="https://mail.google.com/"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- /Product details -->
+            <!-- Product tab -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Details</a></li>
+                        <li><a data-toggle="tab" href="#tab3">Reviews (@Model.reviewsCount)</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <!-- tab1  -->
+                        <div id="tab1" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab1  -->
+                        <!-- tab2  -->
+                        <div id="tab2" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab2  -->
+                        <!-- tab3  -->
+                        <div id="tab3" class="tab-pane fade in">
+                            <div class="row">
+                                <!-- Rating -->
+                                @Html.Partial("_RatingStars")
+                                <!-- /Rating -->
+                                <!-- Reviews -->
+                                <div class="col-md-6">
+                                    @Html.Partial("_Reviews")
+                                </div>
+                                <!-- /Reviews -->
+                                <!-- Review Form -->
+                                <div class="col-md-3">
+                                    <div id="review-form">
+                                        <form class="review-form">
+                                            <input id="clientName" class="input" type="text" placeholder="Your Name" required>
+                                            <input id="clientEmail" class="input" type="email" placeholder="Your Email" required>
+                                            <textarea id="clientText" class="input" required placeholder="Your Review"></textarea>
+                                            <div class="input-rating">
+                                                <span>Your Rating: </span>
+                                                <div class="stars">
+                                                    <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+                                                    <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+                                                    <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+                                                    <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+                                                    <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+                                                </div>
+                                            </div>
+                                            <button id="ratingBtn" class="primary-btn">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /Review Form -->
+                            </div>
+                        </div>
+                        <!-- /tab3  -->
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- Section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title text-center">
+                    <h3 class="title">Related Products</h3>
+                </div>
+            </div>
+            @foreach (var pro in Model.relatedProducts)
+            {
+                int star = 0;
+                var avg = (pro.avg_rating != null ? pro.avg_rating : 1);
+                int num = (int)(avg * 10 % 10);
+                <!-- product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="product">
+                        <div class="product-img">
+                            <img src="~/Content/img/@pro.product_mainPhoto" alt="">
+                            <div class="product-label">
+                                @if (pro.product_discount > 0)
+                                {
+                                    <span class="sale">-@pro.product_discount%</span>
+                                }
+                                <span class="new">NEW</span>
+                            </div>
+                        </div>
+                        <div class="product-body">
+                            <p class="product-category">@*@pro.category_name.TrimEnd('s')*@ Category</p>
+                            <h3 class="product-name"><a href="#">@pro.product_name</a></h3>
+                            @if (pro.product_discount != null)
+                            {
+                                <h3 class="product-price">@pro.product_discountprice&euro; <del class="product-old-price">@pro.product_price</del></h3>
+                            }
+                            else
+                            {
+                                <h3 class="product-price">@pro.product_price &euro;</h3>
+                            }
+                            <div class="product-rating">
+                                @for (int i = 0; i < pro.avg_rating - 1; i++)
+                                {
+                                    <i class="fa fa-star"></i>
+                                    star++;
+                                }
+                                @if (num == 0)
+                                {
+                                    <i class="fa fa-star"></i>
+                                    star++;
+                                }
+                                else if (num < 5)
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                    star++;
+                                }
+                                else if (num >= 5)
+                                {
+                                    <i class="fa fa-star-half-o"></i>
+                                    star++;
+                                }
+                                @for (int i = star; i < 5; i++)
+                                {
+                                    <i class="fa fa-star-o empty"></i>
+                                }
+                            </div>
+
+                            <div class="product-btns">
+                                @*@if (User.Identity.IsAuthenticated && pro.inWishList)
+                                {
+                                    <button style="color:red" onclick="location.href='@Url.Action("RemoveFromWishList", "Home", new { pro_id = pro.product.product_id })'" class="add-to-wishlist"><i class="fa fa-heart"></i><span class="tooltipp">remove from wishlist</span></button>
+                                }*@
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                }
+                                else
+                                {
+                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                                }
+                                <i class="fa fa-ge"></i>
+                                <button onclick="location.href='@Url.Action("Product", "Home", new { id = pro.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                            </div>
+                        </div>
+                        <div class="add-to-cart">
+                            @using (Html.BeginForm("AddToCart", "Home", new { pro_id = pro.product_id }, FormMethod.Post))
+                            {
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- /product -->
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /Section -->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+                //console.log(($(".input-rating input:checked").val() + " is checked!"));
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("rating", "Home")',
+                    contentType: 'json', //"application/json; charset=utf-8",
+                    dataType: 'json',//'html',
+                    data: {
+                        ClientName: $('#clientName').val(),
+                        ClientEmail: $('#clientEmail').val(),
+                        ClientText: $('#clientText').val(),
+                        Rating: $(".input-rating input:checked").val(),
+                        productId: @Model.product.product_id
+                    },
+                    success: function (data) {
+                        $('.tab-nav li').eq(2).addClass('active');
+                        $('#tab3').addClass('active in');
+                        //console.log(data);
+                    },
+                    failure: function (response) {
+                        console.log(response.responseText);
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                        alert.log(response.responseText);
+                    }
+                });
+                e.preventDefault();
+                e.stopPropagation()
+            });
+    </script>
+}

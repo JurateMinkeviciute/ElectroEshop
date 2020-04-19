@@ -1,0 +1,109 @@
+﻿@model ElectroEshop.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Register</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a href="@Url.Action("Index")">Home</a></li>
+                    <li class="active">Register</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- container -->
+<div class="container">
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-md-7 col-md-offset-2">
+            <!-- Billing Details -->
+            <div class="billing-details">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="section-title-center">
+                        <h3 style="text-align: center;" class="title">Sign Up</h3>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*<input class="input" type="text" name="first-name" placeholder="First Name">*@
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "input maxInput", placeholder = "First Name" })
+                        @*@Html.TextBoxFor(m => m.FirstName, new { @class = "input maxInput", placeholder = "First Name" })*@
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*<input class="input" type="text" name="last-name" placeholder="Last Name">*@
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "input maxInput", placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "input maxInput", placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        @*<input class="input" type="email" name="email" placeholder="Email">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "input maxInput", placeholder = "Address" })
+                        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                        @*<input class="input" type="text" name="address" placeholder="Address">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.City, new { @class = "input maxInput", placeholder = "City" })
+                        @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                        @*<input class="input" type="text" name="city" placeholder="City">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Country, new { @class = "input maxInput", placeholder = "Country" })
+                        @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+                        @*<input class="input" type="text" name="country" placeholder="Country">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.ZipCode, new { @class = "input maxInput", placeholder = "Zip Code" })
+                        @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
+                        @*<input class="input" type="text" name="zip-code" placeholder="ZIP Code">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "input maxInput", placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        @*<input class="input" type="tel" name="tel" placeholder="Telephone">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input maxInput", placeholder = "Confirm Password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        @*<input class="input" type="password" name="password" placeholder="Enter Your Password">*@
+                    </div>
+                    <br />
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="ConditionsBool" name="ConditionsBool" value="true">
+                        <label for="ConditionsBool" name="ConditionsBool">
+                            <span></span>
+                            I've read and accept the <a href="#">terms & conditions</a>
+                        </label>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ConditionsBool, "", new { @class = "text-danger" })
+                    <br />
+                    <button type="submit" class="primary-btn order-submit btn-block">Register</button>
+                }
+            </div>
+            <!-- /Billing Details -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>

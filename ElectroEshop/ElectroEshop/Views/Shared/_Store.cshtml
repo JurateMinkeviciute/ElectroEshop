@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNet.Identity;
+@using PagedList;
+@using PagedList.Mvc;
+@using ElectroEshop.Models;
+@*@model PagedList.IPagedList<ElectroEshop.Models.ProductListViewModel>*@
+@model ElectroEshop.Models.ProductListViewModel
+
+<div class="row">
+    <!-- product -->
+    @foreach (var pro in Model.products as IPagedList<ProductsForList>)
+    {
+        int stars = 0;
+        var avgRating = (pro.product.avg_rating != null ? pro.product.avg_rating : 1);
+        int number = (int)(avgRating * 10 % 10);
+        <div class="col-md-4 col-xs-6">
+            <div class="product">
+                <div class="product-img">
+                    <img src="~/Content/img/@pro.product.product_mainPhoto" alt="">
+                    <div class="product-label">
+                        @if (pro.product.product_discount > 0)
+                        {
+                            <span class="sale">-@pro.product.product_discount%</span>
+                        }
+                        <span class="new">NEW</span>
+                    </div>
+                </div>
+                <div class="product-body">
+                    <p class="product-category">@pro.category_name.TrimEnd('s')</p>
+                    <h3 class="product-name"><a href="@Url.Action("Product", new { pro_id = pro.product.product_id })">@pro.product.product_name</a></h3>
+                    @if (pro.product.product_discount != null)
+                    {
+                        <h4 class="product-price"> @pro.product.product_discountprice <del class="product-old-price">@pro.product.product_price</del></h4>
+                    }
+                    else
+                    {
+                        <h4 class="product-price">@pro.product.product_price</h4>
+                    }
+                    <div class="product-rating">
+                        @for (int i = 0; i < pro.product.avg_rating - 1; i++)
+                        {
+                            <i class="fa fa-star"></i>
+                            stars++;
+                        }
+                        @if (number == 0)
+                        {
+                            <i class="fa fa-star"></i>
+                            stars++;
+                        }
+                        else if (number < 5)
+                        {
+                            <i class="fa fa-star-o"></i>
+                            stars++;
+                        }
+                        else if (number >= 5)
+                        {
+                            <i class="fa fa-star-half-o"></i>
+                            stars++;
+                        }
+                        @for (int i = stars; i < 5; i++)
+                        {
+                            <i class="fa fa-star-o empty"></i>
+                        }
+                    </div>
+
+                    <div class="product-btns">
+                        @if (User.Identity.IsAuthenticated && pro.inWishList)
+                        {
+                            <button style="color:red" onclick="location.href='@Url.Action("RemoveFromWishList", "Home", new { pro_id = pro.product.product_id })'" class="add-to-wishlist"><i class="fa fa-heart"></i><span class="tooltipp">remove from wishlist</span></button>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <button onclick="location.href='@Url.Action("AddToWishList", "Home", new { pro_id = pro.product.product_id })'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                        }
+                        else
+                        {
+                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp color-popup">You need to be logged in to use the wish list</span></button>
+                        }
+                        <i class="fa fa-ge"></i>
+                        <button onclick="location.href='@Url.Action("Product", "Home", new { pro_id = pro.product.product_id })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                    </div>
+                </div>
+                <div class="add-to-cart">
+                    @using (Html.BeginForm("AddToCart", "Home", new { pro_id = pro.product.product_id }, FormMethod.Post))
+                    {
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- store bottom filter -->
+<div class="store-filter clearfix">
+
+    <span class="store-qty">
+        Page @(Model.products.PageCount < Model.products.PageNumber ? 0 : Model.products.PageNumber) of @Model.products.PageCount
+    </span>
+    @Html.PagedListPager(Model.products, page => Url.Action(Model.Category, new { page }), new PagedListRenderOptions {
+    LiElementClasses = new string[] { "" },
+    UlElementClasses = new string[] { "store-pagination" },
+    LinkToLastPageFormat = "&Uacute;ltima >>"
+    })
+</div>
+<!-- /store bottom filter -->

@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Confirmed Email";
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+
+<div class="container">
+    <h3 class="info-title">@ViewBag.Title</h3>
+    <div>
+        <h4 class="info-text">
+            Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        </h4>
+        <br>
+        <img class="info-image" src="~/Content/img/info.png" />
+    </div>
+</div>

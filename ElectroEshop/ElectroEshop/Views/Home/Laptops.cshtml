@@ -1,0 +1,36 @@
+﻿@using ElectroEshop.Models;
+@using System.Collections.Generic;
+@*@model IEnumerable<ProductListViewModel>*@
+@model ElectroEshop.Models.ProductListViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="@Url.Action("Index")">Home</a></li>
+                    <li class="active">Laptops (@Model.totalProducts Results)</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+@Html.Partial("_section")
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.navbar-nav li').removeClass("active");
+            $('#liLaptops').addClass('active');
+        });
+    </script>
+}

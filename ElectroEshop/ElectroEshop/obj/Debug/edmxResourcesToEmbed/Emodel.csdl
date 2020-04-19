@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ElectroEshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdditionalShippingAddress">
+    <Key>
+      <PropertyRef Name="shipping_id" />
+    </Key>
+    <Property Name="shipping_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shipping_firstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_lastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_zipCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_telephone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="shipping_createDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK__AspNetUse__fk_sh__2DE6D218" FromRole="AdditionalShippingAddress" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__fk_shipp__0A688BB1" FromRole="AdditionalShippingAddress" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="fk_shipping_id" Type="Int32" />
+    <NavigationProperty Name="AdditionalShippingAddress" Relationship="Self.FK__AspNetUse__fk_sh__2DE6D218" FromRole="AspNetUsers" ToRole="AdditionalShippingAddress" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="BillingAddresses" Relationship="Self.FK__BillingAd__fk_us__7E02B4CC" FromRole="AspNetUsers" ToRole="BillingAddress" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__fk_user___05A3D694" FromRole="AspNetUsers" ToRole="Orders" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="Products1" Relationship="ElectroEshopModel.WishListItems" FromRole="AspNetUser" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="BillingAddress">
+    <Key>
+      <PropertyRef Name="billing_id" />
+    </Key>
+    <Property Name="billing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="billing_firstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_lastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_createDate" Type="DateTime" Precision="3" />
+    <Property Name="billing_zipCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_telephone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="billing_note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="fk_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__BillingAd__fk_us__7E02B4CC" FromRole="BillingAddress" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__fk_billi__04AFB25B" FromRole="BillingAddress" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="brand_id" />
+    </Key>
+    <Property Name="brand_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="brand_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__fk_bra__14270015" FromRole="Brands" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__fk_cat__151B244E" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="ItemOrder">
+    <Key>
+      <PropertyRef Name="item_id" />
+    </Key>
+    <Property Name="item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_quantity" Type="Int32" />
+    <Property Name="item_discount" Type="Int32" />
+    <Property Name="item_quantityPrice" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="fk_product_id" Type="Int32" Nullable="false" />
+    <Property Name="fk_order_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__ItemsOrde__fk_or__09746778" FromRole="ItemsOrder" ToRole="Orders" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__ItemsOrde__fk_pr__0880433F" FromRole="ItemsOrder" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Newsletter">
+    <Key>
+      <PropertyRef Name="newsletter_id" />
+    </Key>
+    <Property Name="newsletter_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="newsletter_email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="newsletter_order" Type="Byte" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_createDate" Type="DateTime" Precision="3" />
+    <Property Name="order_totalPrice" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="order_shippingPrice" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="order_status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="fk_billing_id" Type="Int32" />
+    <Property Name="fk_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="fk_shipping_id" Type="Int32" />
+    <NavigationProperty Name="AdditionalShippingAddress" Relationship="Self.FK__Orders__fk_shipp__0A688BB1" FromRole="Orders" ToRole="AdditionalShippingAddress" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Orders__fk_user___05A3D694" FromRole="Orders" ToRole="AspNetUsers" />
+    <NavigationProperty Name="BillingAddress" Relationship="Self.FK__Orders__fk_billi__04AFB25B" FromRole="Orders" ToRole="BillingAddress" />
+    <NavigationProperty Name="ItemsOrders" Relationship="Self.FK__ItemsOrde__fk_or__09746778" FromRole="Orders" ToRole="ItemsOrder" />
+  </EntityType>
+  <EntityType Name="Photo">
+    <Key>
+      <PropertyRef Name="photo_id" />
+    </Key>
+    <Property Name="photo_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="photo_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="photo_alter" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="fk_product_id" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Photos__fk_produ__17F790F9" FromRole="Photos" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="product_model" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="product_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="product_quantity" Type="Int32" />
+    <Property Name="product_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="product_discount" Type="Int32" />
+    <Property Name="product_mainPhoto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="product_createDate" Type="DateTime" Precision="3" />
+    <Property Name="product_expiredDate" Type="DateTime" Precision="3" />
+    <Property Name="product_size" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="product_color" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="product_soldQuantity" Type="Int32" />
+    <Property Name="fk_brand_id" Type="Int32" />
+    <Property Name="fk_category_id" Type="Int32" />
+    <NavigationProperty Name="Brand" Relationship="Self.FK__Products__fk_bra__14270015" FromRole="Products" ToRole="Brands" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__Products__fk_cat__151B244E" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="ItemsOrders" Relationship="Self.FK__ItemsOrde__fk_pr__0880433F" FromRole="Products" ToRole="ItemsOrder" />
+    <NavigationProperty Name="Photos" Relationship="Self.FK__Photos__fk_produ__17F790F9" FromRole="Products" ToRole="Photos" />
+    <NavigationProperty Name="Reviewers" Relationship="Self.FK__Reviewers__fk_pr__1AD3FDA4" FromRole="Products" ToRole="Reviewers" />
+    <NavigationProperty Name="AspNetUsers1" Relationship="ElectroEshopModel.WishListItems" FromRole="Product" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="Reviewer">
+    <Key>
+      <PropertyRef Name="reviewer_id" />
+    </Key>
+    <Property Name="reviewer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="reviewer_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="reviewer_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="reviewer_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="reviewer_date" Type="DateTime" Precision="0" />
+    <Property Name="reviewer_rating" Type="Byte" />
+    <Property Name="fk_product_id" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Reviewers__fk_pr__1AD3FDA4" FromRole="Reviewers" ToRole="Products" />
+  </EntityType>
+  <Association Name="FK__AspNetUse__fk_sh__2DE6D218">
+    <End Role="AdditionalShippingAddress" Type="Self.AdditionalShippingAddress" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdditionalShippingAddress">
+        <PropertyRef Name="shipping_id" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="fk_shipping_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__fk_shipp__0A688BB1">
+    <End Role="AdditionalShippingAddress" Type="Self.AdditionalShippingAddress" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdditionalShippingAddress">
+        <PropertyRef Name="shipping_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="fk_shipping_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BillingAd__fk_us__7E02B4CC">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="BillingAddress" Type="Self.BillingAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillingAddress">
+        <PropertyRef Name="fk_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__fk_user___05A3D694">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="fk_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__fk_billi__04AFB25B">
+    <End Role="BillingAddress" Type="Self.BillingAddress" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BillingAddress">
+        <PropertyRef Name="billing_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="fk_billing_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__fk_bra__14270015">
+    <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="brand_id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="fk_brand_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__fk_cat__151B244E">
+    <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="fk_category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ItemsOrde__fk_or__09746778">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="ItemsOrder" Type="ElectroEshopModel.ItemOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="ItemsOrder">
+        <PropertyRef Name="fk_order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ItemsOrde__fk_pr__0880433F">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="ItemsOrder" Type="ElectroEshopModel.ItemOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="ItemsOrder">
+        <PropertyRef Name="fk_product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Photos__fk_produ__17F790F9">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Photos" Type="Self.Photo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Photos">
+        <PropertyRef Name="fk_product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reviewers__fk_pr__1AD3FDA4">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Reviewers" Type="Self.Reviewer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Reviewers">
+        <PropertyRef Name="fk_product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="ElectroEshopEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AdditionalShippingAddresses" EntityType="Self.AdditionalShippingAddress" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="BillingAddresses" EntityType="Self.BillingAddress" />
+    <EntitySet Name="Brands" EntityType="Self.Brand" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="ItemOrders" EntityType="ElectroEshopModel.ItemOrder" />
+    <EntitySet Name="Newsletters" EntityType="Self.Newsletter" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Photos" EntityType="Self.Photo" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Reviewers" EntityType="Self.Reviewer" />
+    <AssociationSet Name="FK__AspNetUse__fk_sh__2DE6D218" Association="Self.FK__AspNetUse__fk_sh__2DE6D218">
+      <End Role="AdditionalShippingAddress" EntitySet="AdditionalShippingAddresses" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__fk_shipp__0A688BB1" Association="Self.FK__Orders__fk_shipp__0A688BB1">
+      <End Role="AdditionalShippingAddress" EntitySet="AdditionalShippingAddresses" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BillingAd__fk_us__7E02B4CC" Association="Self.FK__BillingAd__fk_us__7E02B4CC">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="BillingAddress" EntitySet="BillingAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__fk_user___05A3D694" Association="Self.FK__Orders__fk_user___05A3D694">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__fk_billi__04AFB25B" Association="Self.FK__Orders__fk_billi__04AFB25B">
+      <End Role="BillingAddress" EntitySet="BillingAddresses" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__fk_bra__14270015" Association="Self.FK__Products__fk_bra__14270015">
+      <End Role="Brands" EntitySet="Brands" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__fk_cat__151B244E" Association="Self.FK__Products__fk_cat__151B244E">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ItemsOrde__fk_or__09746778" Association="Self.FK__ItemsOrde__fk_or__09746778">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="ItemsOrder" EntitySet="ItemOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ItemsOrde__fk_pr__0880433F" Association="Self.FK__ItemsOrde__fk_pr__0880433F">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ItemsOrder" EntitySet="ItemOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Photos__fk_produ__17F790F9" Association="Self.FK__Photos__fk_produ__17F790F9">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Photos" EntitySet="Photos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reviewers__fk_pr__1AD3FDA4" Association="Self.FK__Reviewers__fk_pr__1AD3FDA4">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Reviewers" EntitySet="Reviewers" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="WishListItems" EntityType="ElectroEshopModel.WishListItem" />
+    <AssociationSet Name="WishListItems1" Association="ElectroEshopModel.WishListItems">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="WishListItem">
+    <Key>
+      <PropertyRef Name="fk_product_id" />
+      <PropertyRef Name="fk_user_id" />
+    </Key>
+    <Property Name="fk_product_id" Type="Int32" Nullable="false" />
+    <Property Name="fk_user_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="WishListItems">
+    <End Type="ElectroEshopModel.Product" Role="Product" Multiplicity="*" />
+    <End Type="ElectroEshopModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+</Schema>

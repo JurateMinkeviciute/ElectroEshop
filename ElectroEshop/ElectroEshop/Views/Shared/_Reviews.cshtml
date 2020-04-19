@@ -1,0 +1,60 @@
+﻿@using ElectroEshop.Models;
+@using System.Collections.Generic;
+@using PagedList;
+@using PagedList.Mvc;
+@model ElectroEshop.Models.ProductViewModel
+
+<div id="reviews">
+    @if (Model.reviewers.Count != 0)
+    {
+        <ul class="reviews">
+            @foreach (var reviewer in Model.reviewers)
+            {
+                int stars = 0;
+                <li>
+                    <div class="review-heading">
+                        <h5 class="name">@reviewer.reviewer_name</h5>
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", reviewer.reviewer_date))
+                        <div class="review-rating">
+                            @for (int i = 0; i < reviewer.reviewer_rating; i++)
+                            {
+                                <i class="fa fa-star"></i>
+                                stars++;
+                            }
+                            @for (int i = stars; i < 5; i++)
+                            {
+                                <i class="fa fa-star-o empty"></i>
+                            }
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>@reviewer.reviewer_comment</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>There are currently no comments.</p>
+    }
+    <div id="reviewId" class="store-filter clearfix">
+      @Html.PagedListPager(
+      Model.reviewers,
+      page => Url.Action("Reviewer", new { page }),
+      PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "reviews" })
+      )
+    </div>
+</div>
+<!-- /Reviews -->
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            console.log("I am Hereeee");
+                    e.defaultPrevented();
+            });
+        </script>
+    }
+   

@@ -1,0 +1,255 @@
+﻿@using ElectroEshop.Models
+@model ElectroEshop.Models.CheckoutViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+@{
+    List<CartItem> sessionHolder = (List<CartItem>)Session["cart"];
+    decimal Total = 0;
+    int CountItems = 0;
+    if (sessionHolder != null)
+    {
+        foreach (var item in sessionHolder)
+        {
+            Total += item.Price * item.Quantity;
+            CountItems++;
+        }
+    }
+}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Checkout</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a href="@Url.Action("Index")">Home</a></li>
+                    <li class="active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            @using (Html.BeginForm("Checkout", "Home", FormMethod.Post))
+            {
+            <div class="col-md-7">
+                <!-- Billing Details -->
+                <div class="billing-details">
+                    <div class="section-title">
+                        <h3 class="title">Billing address</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-checkbox">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <input type="checkbox" id="UserAccountBool" value="true" name="UserAccountBool">
+                                <label style="color:#D10024" for="UserAccountBool">
+                                    <span></span>
+                                    You are logged in, use my account details.
+                                </label>
+                                <br />
+                                <br />
+                            }
+                            <div class="oncaption">
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "input maxInput", placeholder = "First Name" })
+                                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "input maxInput", placeholder = "Last Name" })
+                                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "input maxInput", placeholder = "Email" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Address, new { @class = "input maxInput", placeholder = "Address" })
+                                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Country, new { @class = "input maxInput", placeholder = "Country" })
+                                    @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.City, new { @class = "input maxInput", placeholder = "City" })
+                                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "input maxInput", placeholder = "Zip Code" })
+                                    @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Telephone, new { @class = "input maxInput", placeholder = "Telephone" })
+                                    @Html.ValidationMessageFor(m => m.Telephone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-checkbox">
+                                        <input type="checkbox" id="CreateAccountBool" value="true">
+                                        <label for="CreateAccountBool">
+                                            <span></span>
+                                            Create Account?
+                                        </label>
+                                        <div class="caption">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                                            @Html.TextBoxFor(m => m.Password, new { @class = "input maxInput", placeholder = "Password" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Billing Details -->
+                            <!-- Shiping Details -->
+                            <div class="shiping-details">
+                                <div class="section-title">
+                                    <h3 class="title">Shiping address</h3>
+                                </div>
+                                <div class="input-checkbox">
+                                    <input type="checkbox" id="DifferentAddressBool" name="DifferentAddressBool" value="true">
+                                    <label for="DifferentAddressBool">
+                                        <span></span>
+                                        Ship to a diffrent address?
+                                    </label>
+                                    <div class="caption">
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPfirstName, new { @class = "input maxInput", placeholder = "First Name" })
+                                            @Html.ValidationMessageFor(m => m.SPfirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPlastName, new { @class = "input maxInput", placeholder = "Last Name" })
+                                            @Html.ValidationMessageFor(m => m.SPlastName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPemail, new { @class = "input maxInput", placeholder = "Email" })
+                                            @Html.ValidationMessageFor(m => m.SPemail, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPaddress, new { @class = "input maxInput", placeholder = "Address" })
+                                            @Html.ValidationMessageFor(m => m.SPaddress, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPcountry, new { @class = "input maxInput", placeholder = "Country" })
+                                            @Html.ValidationMessageFor(m => m.SPcountry, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPcity, new { @class = "input maxInput", placeholder = "City" })
+                                            @Html.ValidationMessageFor(m => m.SPcity, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPzipCode, new { @class = "input maxInput", placeholder = "Zip Code" })
+                                            @Html.ValidationMessageFor(m => m.SPzipCode, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.SPtelephone, new { @class = "input maxInput", placeholder = "Telephone" })
+                                            @Html.ValidationMessageFor(m => m.SPtelephone, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Shiping Details -->
+                            <!-- Order notes -->
+                            <div class="order-notes">
+                                @Html.TextAreaFor(m => m.Note, new { @class = "input", placeholder = "Order Notes" })
+                                @Html.ValidationMessageFor(m => m.Note, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- /Order notes -->
+                </div>
+
+            <!-- Order Details -->
+            <div class="col-md-5 order-details">
+                <div class="section-title text-center">
+                    <h3 class="title">Your Order</h3>
+                </div>
+                <div class="order-summary">
+                    <div class="order-col">
+                        <div><strong>PRODUCT</strong></div>
+                        <div><strong>TOTAL</strong></div>
+                    </div>
+
+                    <div class="order-products">
+                        @if (sessionHolder != null)
+                        {
+                            foreach (var pro in sessionHolder)
+                            {
+                                <div class="order-col">
+                                    <div>@pro.Quantity&#120; @pro.ProductName</div>
+                                    <div>@pro.Price &euro;</div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="order-col">
+                        <div>Shiping</div>
+                        <div><strong>FREE</strong></div>
+                    </div>
+                    <div class="order-col">
+                        <div><strong>TOTAL</strong></div>
+                        <div><strong class="order-total">@Total &euro;</strong></div>
+                    </div>
+                </div>
+                <div class="payment-method">
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-1">
+                        <label for="payment-1">
+                            <span></span>
+                            Direct Bank Transfer
+                        </label>
+                        <div class="caption">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-2">
+                        <label for="payment-2">
+                            <span></span>
+                            Cheque Payment
+                        </label>
+                        <div class="caption">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-3">
+                        <label for="payment-3">
+                            <span></span>
+                            Paypal System
+                        </label>
+                        <div class="caption">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-checkbox">
+                    <input type="checkbox" id="terms" name="terms" value="true">
+                    <label for="terms">
+                        <span></span>
+                        I've read and accept the <a href="#">terms & conditions</a>
+                    </label>
+                </div>
+                <button type="submit" class="primary-btn order-submit">Place order</button>
+            </div>
+            <!-- /Order Details -->
+            }
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

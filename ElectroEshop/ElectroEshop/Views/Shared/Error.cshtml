@@ -1,0 +1,31 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+<div 
+     class="container">
+    @if (ViewBag.errorMessage == null)
+    {
+        <h1 class="info-title text-danger">
+            @ViewBag.errorTitle
+        </h1>
+
+        <h3 class="info-text">
+            The support team is notified and we are working on the fix.
+        </h3>
+        <h5 class="info-text">Contact us on support@ElectroEshop.com</h5>
+    }
+    else
+    {
+        <h1 class="info-title text-danger">
+            @ViewBag.errorTitle
+        </h1>
+
+            <h2 class="info-text">@ViewBag.errorMessage</h2><br>
+            <h2 class="info-text">Unfortunately, The page you are looking for does not exist.</h2>
+            <h2 class="info-text">Please correct your search and try again</h2>
+
+    }
+    <img class="info-image" src="~/Content/img/noaccess.png" />
+</div>

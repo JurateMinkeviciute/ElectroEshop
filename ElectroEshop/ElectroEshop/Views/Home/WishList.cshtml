@@ -1,0 +1,118 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using ElectroEshop.Models;
+@using System.Collections.Generic;
+@*@model IEnumerable<ProductListViewModel>*@
+@model ElectroEshop.Models.WishViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+    string items;
+}
+
+@{
+    ViewBag.Title = "WishList";
+    Layout = "~/Views/Shared/_LayoutEshop.cshtml";
+}
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="@Url.Action("Home")">Home</a></li>
+                    <li class="active">WishList (@Model.totalCount Results)</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+
+<div class="container">
+    @*<h2>Wish List</h2>*@
+    @if (Model.products.Any())
+    {
+        <!-- store products -->
+        <div class="row">
+            <!-- product -->
+            @foreach (var pro in Model.products)
+            {@*as IPagedList<Product>)*@
+            <div class="col-md-3 col-xs-6">
+                <div class="product">
+                    <div class="product-img">
+                        <img src="~/Content/img/@pro.product.product_mainPhoto" alt="">
+                        <div class="product-label">
+                            @if (pro.product.product_discount > 0)
+                            {
+                                <span class="sale">-@pro.product.product_discount%</span>
+                            }
+                            <span class="new">NEW</span>
+                        </div>
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">@pro.category_name.TrimEnd('s')</p>
+                        <h3 class="product-name"><a href="#">@pro.product.product_name</a></h3>
+                        @if (pro.product.product_discount != null)
+                        {
+                            decimal discountPrice = (decimal)((pro.product.product_price * (100 - pro.product.product_discount)) / 100);
+                            <h4 class="product-price"> @discountPrice.ToString("N2") <del class="product-old-price">@pro.product.product_price</del></h4>
+                        }
+                        else
+                        {
+                            <h4 class="product-price">@pro.product.product_price</h4>
+                        }
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-btns">
+                            <button style="color:red" onclick="location.href='@Url.Action("RemoveFromWishList", "Home", new { pro_id = pro.product.product_id })'" class="add-to-wishlist"><i class="fa fa-heart"></i><span class="tooltipp">remove from wishlist</span></button>
+                            <i class="fa fa-ge"></i>
+                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">view</span></button>
+                        </div>
+                    </div>
+                    <div class="add-to-cart">
+                        @using (Html.BeginForm("AddToCart", "Home", new { pro_id = pro.product.product_id }, FormMethod.Post))
+                        {
+                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+        <!-- End of store-->
+        <!-- store bottom filter -->
+        <div class="store-filter clearfix">
+
+            <span class="store-qty">
+                Page @(Model.products.PageCount < Model.products.PageNumber ? 0 : Model.products.PageNumber) of @Model.products.PageCount
+            </span>
+            @Html.PagedListPager(Model.products, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions {
+                    LiElementClasses = new string[] { "" },
+                    UlElementClasses = new string[] { "store-pagination" },
+                    LinkToLastPageFormat = "&Uacute;ltima >>"
+                })
+        </div>
+        <!-- /store bottom filter -->
+    }
+    else
+    {
+        <h3 style="    font-weight: 400; text-align: center;  margin-bottom: 30px;">
+            Your wish list is empty
+        </h3>
+        <button href="@Url.Action("Categories", "Home")" style="display: block; margin: auto" type="submit" class="primary-btn order-submit">Browse products now</button>
+        <img style="width: 40%;
+    margin: auto;
+    opacity: 0.9;
+    display: block;" src="~/Content/img/wishlist.png" />
+    }
+</div>

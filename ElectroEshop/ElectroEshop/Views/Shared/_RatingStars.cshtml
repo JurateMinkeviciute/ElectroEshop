@@ -1,0 +1,66 @@
+﻿@model ElectroEshop.Models.ProductViewModel
+@{
+    int stars = 0;
+    decimal avgRating = Model.countRating.avgRating;
+    decimal num = (decimal)System.Math.Round(avgRating, 2);
+    int number = (int)(num * 10 % 10);
+    var rating = Model.countRating;
+}
+<!-- Rating -->
+<div class="col-md-3">
+    <div id="rating">
+        <div class="rating-avg">
+            <span>@avgRating.ToString("N1")</span>
+            <div class="rating-stars">
+                @for (int i = 0; i < @avgRating - 1; i++)
+                {
+                    <i class="fa fa-star"></i>
+                    stars++;
+                }
+                @if (number == 0)
+                {
+                    <i class="fa fa-star"></i>
+                    stars++;
+                }
+                else if (number < 5)
+                {
+                    <i class="fa fa-star-o"></i>
+                    stars++;
+                }
+                else if (number >= 5)
+                {
+                    <i class="fa fa-star-half-o"></i>
+                    stars++;
+                }
+                @for (int i = stars; i < 5; i++)
+                {
+                    <i class="fa fa-star-o empty"></i>
+                }
+            </div>
+        </div>
+        <ul class="rating">
+            @for (int i = 4; i >= 0; i--)
+            {
+            <li>
+                <div class="rating-stars">
+                    @for (int s = 0; s < i + 1; s++)
+                    {
+                        <i class="fa fa-star"></i>
+
+                    }
+                    @for (int o = 0; o < 4 - i; o++)
+                    {
+                        <i class="fa fa-star-o"></i>
+                    }
+
+                </div>
+                <div class="rating-progress">
+                    <div style="width: @rating.percentStars[i]%;"></div>
+                </div>
+                <span class="sum">@rating.stars[i]</span>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+<!-- /Rating -->
